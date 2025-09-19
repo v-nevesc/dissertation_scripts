@@ -104,7 +104,7 @@ def compute_seasonal_trends(ds, data_var=None, time_dim='Time', season_coord='se
                         continue
     
     # --------------------------
-    # Create output xarray.Dataset
+    # Create output xarray Dataset
     # --------------------------
     result_ds = xr.Dataset(
         {name: (('season', 'latitude', 'longitude'), data) for name, data in results.items()},
@@ -146,7 +146,7 @@ seasons = xr.DataArray(
 )
 
 # --------------------------
-# Define dataset file paths (generic)
+# Define dataset file paths
 # --------------------------
 chl_path = "PATH_TO_CHL_NETCDF_FILE/chl_RG.nc"
 dom_path = "PATH_TO_DOM_NETCDF_FILE/dom_RG.nc"
@@ -167,7 +167,7 @@ dom = dom.assign_coords(season=('Time', seasons.sel(month=dom['Time.month']).dat
 tsm = tsm.assign_coords(season=('Time', seasons.sel(month=tsm['Time.month']).data))
 
 # --------------------------
-# Rename variables for clarity
+# Rename variables
 # --------------------------
 chl = chl.rename({"__xarray_dataarray_variable__": "chl"})
 dom = dom.rename({"__xarray_dataarray_variable__": "CDM_absorption_coefficient"})
@@ -187,3 +187,4 @@ dom_trends.to_netcdf("PATH_TO_SAVE_RESULTS/dom_trends.nc")
 print("\nProcessing TSM data...")
 tsm_trends = compute_seasonal_trends(tsm, data_var='tsm')
 tsm_trends.to_netcdf("PATH_TO_SAVE_RESULTS/tsm_trends.nc")
+
